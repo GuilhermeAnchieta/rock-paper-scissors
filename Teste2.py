@@ -2,7 +2,6 @@
 import pygame
 from pygame.locals import *
 from random import randint
-from time import sleep
 
 #inicia janela do pygame
 pygame.init()
@@ -30,7 +29,7 @@ pv = 2.5
 by = 150
 
 #carregando imagens
-fundo = pygame.image.load(r'images/fundo.png')
+fundo = pygame.image.load(r'images/fundoa.png')
 pedra = pygame.image.load(r'images/Pedra.png')
 papel = pygame.image.load(r'images/Papel.png')
 tesoura = pygame.image.load(r'images/Tesoura.png')
@@ -45,9 +44,9 @@ perde = pygame.image.load(r'images/perde.png')
 ganha = pygame.image.load(r'images/ganha.png')
 again = pygame.image.load(r'images/again.png')
 #tamanho das imagens
-pedra = pygame.transform.scale(pedra, (200,200))
-papel = pygame.transform.scale(papel, (200,200))
-tesoura = pygame.transform.scale(tesoura, (200,200))
+pedra = pygame.transform.scale(pedra, (200,205))
+papel = pygame.transform.scale(papel, (200,205))
+tesoura = pygame.transform.scale(tesoura, (200,205))
 bigPedra = pygame.transform.scale(bigPedra, (150,150))
 bigTesoura = pygame.transform.scale(bigTesoura, (200,150))
 bigPapel = pygame.transform.scale(bigPapel, (200,150))
@@ -64,7 +63,7 @@ while True:
 
     #para imput de botoes e clicks
     for event in pygame.event.get():
-        if event.type == QUIT:
+        if event.type == pygame.QUIT:
             pygame.quit()
         if event.type == pygame.MOUSEBUTTONUP:
             if modoJogo == True:
@@ -105,8 +104,8 @@ while True:
     screen.blit(fundo, (0, 0))
     
     #botoes
-    screen.blit(pedra, (50,417))
-    screen.blit(papel, (200,405))
+    screen.blit(pedra, (70,417))
+    screen.blit(papel, (205,405))
     screen.blit(tesoura, (350,400))
 
     #mostra imagem player e animação da mao
