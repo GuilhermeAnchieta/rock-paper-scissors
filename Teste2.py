@@ -30,19 +30,27 @@ by = 150
 
 #carregando imagens
 fundo = pygame.image.load(r'images/fundoa.png')
-pedra = pygame.image.load(r'images/Pedra.png')
-papel = pygame.image.load(r'images/Papel.png')
-tesoura = pygame.image.load(r'images/Tesoura.png')
-bigPedra = pygame.image.load(r'images/bigPedra.png')
-bigPapel = pygame.image.load(r'images/bigPapel.png')
-bigTesoura = pygame.image.load(r'images/bigTesoura.png')
-bot0 = pygame.image.load(r'images/bot0.png')
-botPedra = pygame.image.load(r'images/botPedra.png')
-botPapel = pygame.image.load(r'images/botPapel.png')
-botTesoura = pygame.image.load(r'images/botTesoura.png')
+
+#jogador
+nomejogador = pygame.image.load(r'images/PLAYER/JOGADOR.png')
+pedra = pygame.image.load(r'images/PLAYER/Pedra.png')
+papel = pygame.image.load(r'images/PLAYER/Papel.png')
+tesoura = pygame.image.load(r'images/PLAYER/Tesoura.png')
+#bot
+nomebot = pygame.image.load(r'images/BOT/BOT.png')
+bot0 = pygame.image.load(r'images/BOT/bot0.png')
+botPedra = pygame.image.load(r'images/BOT/botPedra.png')
+botPapel = pygame.image.load(r'images/BOT/botPapel.png')
+botTesoura = pygame.image.load(r'images/BOT/botTesoura.png')
+#mãobig
+bigPedra = pygame.image.load(r'images/bigmão/bigPedra.png')
+bigPapel = pygame.image.load(r'images/bigmão/bigPapel.png')
+bigTesoura = pygame.image.load(r'images/bigmão/bigTesoura.png')
+#outros
 perde = pygame.image.load(r'images/perde.png')
 ganha = pygame.image.load(r'images/ganha.png')
 again = pygame.image.load(r'images/again.png')
+
 #tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200,205))
 papel = pygame.transform.scale(papel, (200,205))
@@ -102,7 +110,7 @@ while True:
     
     #fundo
     screen.blit(fundo, (0, 0))
-    
+
     #botoes
     screen.blit(pedra, (70,417))
     screen.blit(papel, (205,405))
@@ -160,10 +168,14 @@ while True:
 
     #vidas
     ajuste = 200-botVida
-    pygame.draw.rect(screen, (20,20,20), [50,50,200,20], 0)
-    pygame.draw.rect(screen, (20,20,20), [350,50,200,20], 0)
+    pygame.draw.rect(screen, (80,0,0), [50,50,200,20], 0)
+    pygame.draw.rect(screen, (80,0,0), [350,50,200,20], 0)
     pygame.draw.rect(screen, (250,0,0), [50,50,playerVida,20], 0)
     pygame.draw.rect(screen, (250,0,0), [350+ajuste,50,botVida,20], 0)
+
+    #nome do jogador e do bot
+    screen.blit(nomejogador, (10, 49))
+    screen.blit(nomebot, (453, 49))
     
     #caso ganhe ou perca
     if playerVida <= 0:
