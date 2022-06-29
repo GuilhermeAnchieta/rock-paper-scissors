@@ -1,0 +1,16 @@
+////// A FAZER /////////
+
+    som
+    musica
+    feedback dos botoes
+
+///// FAZENDO /////////
+
+    menu (joao)
+
+
+/////// FEITO /////////
+
+    logica do JOGO
+    jogo no pygame
+    imagens
