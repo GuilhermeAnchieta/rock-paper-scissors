@@ -2,7 +2,7 @@ from random import randint
 from time import sleep
 #implementação da logica simples, pode mudar como quiser
 
-
+# uepa
 #variaveis que guardam jogada do player e bot
 player = 0
 #escolhe um numero entre 1 e 3 
