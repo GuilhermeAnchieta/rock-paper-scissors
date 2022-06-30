@@ -14,7 +14,6 @@ bot = 0
 playerVida = 200
 botVida = 200
 
-# randint(1,3)
 # estado do jogo, pra definir quando pode clicar ou nao
 modoJogo = True
 # chave pra deixar bot escolher
@@ -169,9 +168,20 @@ while True:
             playerVida -= 5
             botVida -= 5
         elif (player == 1 and bot == 3) or (player == 2 and bot == 1) or (player == 3 and bot == 2):
-            botVida -= 20
+            if player == 1:
+                botVida -= 20
+            elif player == 2:
+                botVida -= 10
+            elif player == 3:
+                botVida -= 30
+
         else:
-            playerVida -= 20
+            if bot == 1:
+                playerVida -= 20
+            elif bot == 2:
+                playerVida -= 10
+            elif bot == 3:
+                playerVida -= 30
 
     # vidas
     ajuste = 200-botVida
