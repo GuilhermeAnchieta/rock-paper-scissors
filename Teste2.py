@@ -17,6 +17,7 @@ botVida = 200
 # randint(1,3)
 # estado do jogo, pra definir quando pode clicar ou nao
 modoJogo = True
+Menu = True
 # chave pra deixar bot escolher
 chave = True
 chaveA = 0
@@ -27,10 +28,12 @@ Fim = False
 py = 150
 pv = 2.5
 by = 150
-
+tv = 0.1
+#animacao de titulo
+textMuve = 20
 # carregando imagens
 fundo = pygame.image.load(r'images/fundo mk.png')
-
+fundoMenu = pygame.image.load(r'images/fundoMenu.png')
 # jogador
 nomejogador = pygame.image.load(r'images/PLAYER/JOGADOR.png')
 pedra = pygame.image.load(r'images/PLAYER/Pedra.png')
@@ -50,6 +53,8 @@ bigTesoura = pygame.image.load(r'images/bigmão/bigTesoura.png')
 perde = pygame.image.load(r'images/perde.png')
 ganha = pygame.image.load(r'images/ganha.png')
 again = pygame.image.load(r'images/again.png')
+playBtn = pygame.image.load(r'images/playBtn.png')
+goToMenu = pygame.image.load(r'images/goToMenu.png')
 quadrado1 = pygame.image.load(r'images/quadrados.png')
 quadrado2 = pygame.image.load(r'images/quadrados.png')
 quadrado3 = pygame.image.load(r'images/quadrados.png')
@@ -71,12 +76,14 @@ while True:
 
     # pega posição do mouse
     x, y = pygame.mouse.get_pos()
-
+    #print(x," ",y," /n")
     # para imput de botoes e clicks
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
         if event.type == pygame.MOUSEBUTTONUP:
+            if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
+                Menu = False
             if modoJogo == True:
                 if x < 190 and x > 80 and y > 440 and y < 580:
                     player = 1
@@ -92,8 +99,9 @@ while True:
                     chave = False
             # reset do jogo
             if Fim == True:
-                if x < 360 and x > 240 and y > 300 and y < 415:
-                    print("hi")
+                if x < 428 and x > 313 and y > 300 and y < 415:
+                    Menu = True
+                if x < 286 and x > 170 and y > 300 and y < 415:
                     player = 0
                     bot = 0
                     playerVida = 200
@@ -110,98 +118,115 @@ while True:
 
     # reloading da tela
     screen.fill((0, 0, 0))
+    
+    #menu
+    if Menu == True:
+        #fundo
+        screen.blit(fundoMenu, (0, 0))
+        screen.blit(playBtn, (240, 250))
+        #titulp
+        font = pygame.font.SysFont(None, 80)
+        img = font.render('Rock Paper Scissors', True, (10,25,55))
+        screen.blit(img, (20, textMuve))
+        textMuve += tv
+        if textMuve > 150 or textMuve < 5:
+            tv *= -1
+        #devs
+        font = pygame.font.SysFont(None, 30)
+        img = font.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50,50,50))
+        screen.blit(img, (20, 580))
+    #jogo
+    elif Menu == False:
+        screen.blit(fundo, (0, 0))
+        # quadrado preto
+        screen.blit(quadrado1, (90, 435))
+        screen.blit(quadrado2, (230, 435))
+        screen.blit(quadrado3, (370, 435))
+        # botoes
+        screen.blit(pedra, (70, 417))
+        screen.blit(papel, (205, 405))
+        screen.blit(tesoura, (350, 400))
 
-    # fundo
-    screen.blit(fundo, (0, 0))
+        # mostra imagem player e animação da mao
+        if player == 0:
+            screen.blit(bigPedra, (50, py))
+        if chave == False:
+            screen.blit(bigPedra, (50, py))
+            bot = 0
+            py -= pv
+            if py < 100 or py >= 150:
+                pv *= -1
+                chaveA += 1
+            if chaveA >= 6:
+                chaveA = 0
+                chave = True
+                botKey = True
 
-    # quadrado preto
-    screen.blit(quadrado1, (90, 435))
-    screen.blit(quadrado2, (230, 435))
-    screen.blit(quadrado3, (370, 435))
-    # botoes
-    screen.blit(pedra, (70, 417))
-    screen.blit(papel, (205, 405))
-    screen.blit(tesoura, (350, 400))
+        if chave == True:
+            if player == 1:
+                screen.blit(bigPedra, (50, 150))
+            elif player == 2:
+                screen.blit(bigPapel, (50, 150))
+            elif player == 3:
+                screen.blit(bigTesoura, (50, 150))
+            modoJogo = True
 
-    # mostra imagem player e animação da mao
-    if player == 0:
-        screen.blit(bigPedra, (50, py))
-    if chave == False:
-        screen.blit(bigPedra, (50, py))
-        bot = 0
-        py -= pv
-        if py < 100 or py >= 150:
-            pv *= -1
-            chaveA += 1
-        if chaveA >= 6:
-            chaveA = 0
-            chave = True
-            botKey = True
+        # escolha do bot,
+        if botKey == True:
+            vidaKey = True
+            bot = randint(1, 3)
+            botKey = False
+        # mostra imagem bot
+        if bot == 0:
+            screen.blit(bot0, (400, by))
+        elif bot == 1:
+            screen.blit(botPedra, (400, 150))
+        elif bot == 2:
+            screen.blit(botPapel, (400, 150))
+        elif bot == 3:
+            screen.blit(botTesoura, (400, 150))
 
-    if chave == True:
-        if player == 1:
-            screen.blit(bigPedra, (50, 150))
-        elif player == 2:
-            screen.blit(bigPapel, (50, 150))
-        elif player == 3:
-            screen.blit(bigTesoura, (50, 150))
-        modoJogo = True
+        # logica de ganha/perde
+        if vidaKey == True:
+            vidaKey = False
+            if player == bot:
+                playerVida -= 5
+                botVida -= 5
+            elif (player == 1 and bot == 3) or (player == 2 and bot == 1) or (player == 3 and bot == 2):
+                botVida -= 20
+            else:
+                playerVida -= 20
 
-    # escolha do bot,
-    if botKey == True:
-        vidaKey = True
-        bot = randint(1, 3)
-        botKey = False
-    # mostra imagem bot
-    if bot == 0:
-        screen.blit(bot0, (400, by))
-    elif bot == 1:
-        screen.blit(botPedra, (400, 150))
-    elif bot == 2:
-        screen.blit(botPapel, (400, 150))
-    elif bot == 3:
-        screen.blit(botTesoura, (400, 150))
+        # vidas
+        ajuste = 200-botVida
+        pygame.draw.rect(screen, (80, 0, 0), [50, 50, 200, 20], 0)
+        pygame.draw.rect(screen, (80, 0, 0), [350, 50, 200, 20], 0)
+        pygame.draw.rect(screen, (250, 0, 0), [50, 50, playerVida, 20], 0)
+        pygame.draw.rect(screen, (250, 0, 0), [350+ajuste, 50, botVida, 20], 0)
 
-    # logica de ganha/perde
-    if vidaKey == True:
-        vidaKey = False
-        if player == bot:
-            playerVida -= 5
-            botVida -= 5
-        elif (player == 1 and bot == 3) or (player == 2 and bot == 1) or (player == 3 and bot == 2):
-            botVida -= 20
-        else:
-            playerVida -= 20
+        # nome do jogador e do bot
+        screen.blit(nomejogador, (10, 49))
+        screen.blit(nomebot, (453, 49))
 
-    # vidas
-    ajuste = 200-botVida
-    pygame.draw.rect(screen, (80, 0, 0), [50, 50, 200, 20], 0)
-    pygame.draw.rect(screen, (80, 0, 0), [350, 50, 200, 20], 0)
-    pygame.draw.rect(screen, (250, 0, 0), [50, 50, playerVida, 20], 0)
-    pygame.draw.rect(screen, (250, 0, 0), [350+ajuste, 50, botVida, 20], 0)
+        # caso ganhe ou perca
+        if playerVida <= 0:
+            if py < 600:
+                py += 3
+                modoJogo = False
+            player = 0
+            Fim = True
+            screen.blit(perde, (50, 150))
+        if botVida <= 0:
+            if by < 600:
+                by += 3
+                modoJogo = False
+            bot = 0
+            Fim = True
+            screen.blit(ganha, (350, 150))
 
-    # nome do jogador e do bot
-    screen.blit(nomejogador, (10, 49))
-    screen.blit(nomebot, (453, 49))
-
-    # caso ganhe ou perca
-    if playerVida <= 0:
-        if py < 600:
-            py += 3
-            modoJogo = False
-        player = 0
-        Fim = True
-        screen.blit(perde, (50, 150))
-    if botVida <= 0:
-        if by < 600:
-            by += 3
-            modoJogo = False
-        bot = 0
-        Fim = True
-        screen.blit(ganha, (350, 150))
-
-    # para jogar novamente
-    if Fim == True:
-        screen.blit(again, (240, 300))
-    # refresh da tela
+        # para jogar novamente
+        if Fim == True:
+            screen.blit(again, (170, 300))
+            screen.blit(goToMenu, (310, 300))
+        # refresh da tela
     pygame.display.update()
