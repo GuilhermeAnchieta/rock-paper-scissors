@@ -26,7 +26,10 @@ Fim = False
 py = 150
 pv = 2.5
 by = 150
-
+# bloqueador de opção
+blockPedra = 1
+blockPapel = 1
+blockTesoura = 1
 # carregando imagens
 fundo = pygame.image.load(r'images/fundo mk.png')
 
@@ -52,7 +55,6 @@ again = pygame.image.load(r'images/again.png')
 quadrado1 = pygame.image.load(r'images/quadrados.png')
 quadrado2 = pygame.image.load(r'images/quadrados.png')
 quadrado3 = pygame.image.load(r'images/quadrados.png')
-
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
 papel = pygame.transform.scale(papel, (200, 205))
@@ -65,36 +67,71 @@ botPedra = pygame.transform.scale(botPedra, (150, 150))
 botPapel = pygame.transform.scale(botPapel, (150, 150))
 botTesoura = pygame.transform.scale(botTesoura, (150, 150))
 
+#iniciando textos 
+pygame.font.init()
+cor_branca = (255, 255, 255)
+font = pygame.font.get_default_font()
+cont = pygame.font.SysFont(font, 45)
+
 # loop principal
 while True:
 
     # pega posição do mouse
     x, y = pygame.mouse.get_pos()
 
+
     # para imput de botoes e clicks
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
+            quit()
+        # erro: criar variavel de rodada para ficar duas e não só uma
         if event.type == pygame.MOUSEBUTTONUP:
+
             if modoJogo == True:
+                
                 if x < 190 and x > 80 and y > 440 and y < 580:
-                    player = 1
-                    modoJogo = False
-                    chave = False
+                    if blockPedra < 3:
+                        blockPedra += 1
+                        if blockPapel == 2:
+                            blockPapel -= 1
+                        if blockTesoura == 2:
+                            blockTesoura -= 1
+                        player = 1
+                        modoJogo = False
+                        chave = False
+
                 elif x < 340 and x > 250 and y > 440 and y < 580:
-                    player = 2
-                    modoJogo = False
-                    chave = False
+                    if blockPapel < 3:
+                        blockPapel += 1
+                        if blockPedra == 2:
+                            blockPedra -= 1
+                        if blockTesoura == 2:
+                            blockTesoura -= 1
+                        player = 2
+                        modoJogo = False
+                        chave = False
+
                 elif x < 490 and x > 390 and y > 440 and y < 580:
-                    player = 3
-                    modoJogo = False
-                    chave = False
+                    if blockTesoura < 3:
+                        blockTesoura += 1
+                        if blockPedra == 2:
+                            blockPedra -= 1
+                        if blockPapel == 2:
+                            blockPapel -= 1
+                        player = 3
+                        modoJogo = False
+                        chave = False
+                    
             # reset do jogo
             if Fim == True:
                 if x < 360 and x > 240 and y > 300 and y < 415:
                     print("hi")
                     player = 0
                     bot = 0
+                    blockPedra = 1
+                    blockPapel = 1
+                    blockTesoura = 1
                     playerVida = 200
                     botVida = 200
                     modoJogo = True
@@ -107,6 +144,27 @@ while True:
                     pv = 3
                     by = 150
 
+            if blockPedra == 3:
+                blockPedra += 1
+            elif blockPedra == 4:
+                blockPedra += 1
+            elif blockPedra == 5:
+                blockPedra = 1      
+
+            if blockPapel == 3:
+                blockPapel += 1
+            elif blockPapel == 4:
+                blockPapel += 1
+            elif blockPapel == 5:
+                blockPapel = 1
+
+            if blockTesoura == 3:
+                blockTesoura += 1
+            elif blockTesoura == 4:
+                blockTesoura += 1
+            elif blockTesoura == 5:
+                blockTesoura = 1
+
     # reloading da tela
     screen.fill((0, 0, 0))
 
@@ -114,13 +172,30 @@ while True:
     screen.blit(fundo, (0, 0))
 
     # quadrado preto
-    screen.blit(quadrado1, (90, 435))
-    screen.blit(quadrado2, (230, 435))
-    screen.blit(quadrado3, (370, 435))
+    if blockPedra < 3:
+        screen.blit(quadrado1, (90, 435))
+    if blockPapel < 3:
+        screen.blit(quadrado2, (230, 435))
+    if blockTesoura < 3:
+        screen.blit(quadrado3, (370, 435))
     # botoes
-    screen.blit(pedra, (70, 417))
+    screen.blit(pedra, (70, 412))
+    if blockPedra > 2:
+        screen.blit(quadrado1, (90, 435))
     screen.blit(papel, (205, 405))
+    if blockPapel > 2:
+        screen.blit(quadrado2, (230, 435))
     screen.blit(tesoura, (350, 400))
+    if blockTesoura > 2:
+        screen.blit(quadrado3, (370, 435))
+
+    #texto-- True para apareer -- False para sumir 
+    text = cont.render(f'{blockPedra}', True, cor_branca)
+    screen.blit(text, (90,435))
+    text = cont.render(f'{blockPapel}', True, cor_branca)
+    screen.blit(text, (230,435))
+    text = cont.render(f'{blockTesoura}', True, cor_branca)
+    screen.blit(text, (370,435))
 
     # mostra imagem player e animação da mao
     if player == 0:
