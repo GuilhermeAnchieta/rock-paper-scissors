@@ -78,7 +78,7 @@ while True:
 
     # pega posição do mouse
     x, y = pygame.mouse.get_pos()
-
+    print (x)
 
     # para imput de botoes e clicks
     for event in pygame.event.get():
@@ -90,7 +90,7 @@ while True:
 
             if modoJogo == True:
                 
-                if x < 190 and x > 80 and y > 440 and y < 580:
+                if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
                     if blockPedra < 3:
                         blockPedra += 1
                         if blockPapel == 2:
@@ -100,8 +100,19 @@ while True:
                         player = 1
                         modoJogo = False
                         chave = False
-
-                elif x < 340 and x > 250 and y > 440 and y < 580:
+                    if blockTesoura == 3:
+                        blockTesoura += 1
+                    elif blockTesoura == 4:
+                        blockTesoura += 1
+                    elif blockTesoura == 5:
+                        blockTesoura = 1
+                    if blockPapel == 3:
+                        blockPapel += 1
+                    elif blockPapel == 4:
+                        blockPapel += 1
+                    elif blockPapel == 5:
+                        blockPapel = 1
+                elif x < 340 and x > 250 and y > 440 and y < 580 and blockPapel < 3:
                     if blockPapel < 3:
                         blockPapel += 1
                         if blockPedra == 2:
@@ -111,8 +122,19 @@ while True:
                         player = 2
                         modoJogo = False
                         chave = False
-
-                elif x < 490 and x > 390 and y > 440 and y < 580:
+                    if blockPedra == 3:
+                        blockPedra += 1
+                    elif blockPedra == 4:
+                        blockPedra += 1
+                    elif blockPedra == 5:
+                        blockPedra = 1
+                    if blockTesoura == 3:
+                        blockTesoura += 1
+                    elif blockTesoura == 4:
+                        blockTesoura += 1
+                    elif blockTesoura == 5:
+                        blockTesoura = 1
+                elif x < 490 and x > 390 and y > 440 and y < 580 and blockTesoura < 3:
                     if blockTesoura < 3:
                         blockTesoura += 1
                         if blockPedra == 2:
@@ -122,7 +144,18 @@ while True:
                         player = 3
                         modoJogo = False
                         chave = False
-                    
+                    if blockPedra == 3:
+                        blockPedra += 1
+                    elif blockPedra == 4:
+                        blockPedra += 1
+                    elif blockPedra == 5:
+                        blockPedra = 1
+                    if blockPapel == 3:
+                        blockPapel += 1
+                    elif blockPapel == 4:
+                        blockPapel += 1
+                    elif blockPapel == 5:
+                        blockPapel = 1
             # reset do jogo
             if Fim == True:
                 if x < 360 and x > 240 and y > 300 and y < 415:
@@ -143,28 +176,6 @@ while True:
                     py = 150
                     pv = 3
                     by = 150
-
-            if blockPedra == 3:
-                blockPedra += 1
-            elif blockPedra == 4:
-                blockPedra += 1
-            elif blockPedra == 5:
-                blockPedra = 1      
-
-            if blockPapel == 3:
-                blockPapel += 1
-            elif blockPapel == 4:
-                blockPapel += 1
-            elif blockPapel == 5:
-                blockPapel = 1
-
-            if blockTesoura == 3:
-                blockTesoura += 1
-            elif blockTesoura == 4:
-                blockTesoura += 1
-            elif blockTesoura == 5:
-                blockTesoura = 1
-
     # reloading da tela
     screen.fill((0, 0, 0))
 
