@@ -167,6 +167,22 @@ while True:
             if Fim == True:
                 if x < 428 and x > 313 and y > 300 and y < 415:
                     Menu = True
+                    player = 0
+                    bot = 0
+                    blockPedra = 1
+                    blockPapel = 1
+                    blockTesoura = 1
+                    playerVida = 200
+                    botVida = 200
+                    modoJogo = True
+                    chave = True
+                    chaveA = 0
+                    botKey = False
+                    vidaKey = False
+                    Fim = False
+                    py = 150
+                    pv = 3
+                    by = 150
                 if x < 286 and x > 170 and y > 300 and y < 415:
                     player = 0
                     bot = 0
@@ -279,17 +295,6 @@ while True:
         elif bot == 3:
             screen.blit(botTesoura, (400, 150))
 
-        # logica de ganha/perde
-        if vidaKey == True:
-            vidaKey = False
-            if player == bot:
-                playerVida -= 5
-                botVida -= 5
-            elif (player == 1 and bot == 3) or (player == 2 and bot == 1) or (player == 3 and bot == 2):
-                botVida -= 20
-            else:
-                playerVida -= 20
-
         # vidas
         ajuste = 200-botVida
         pygame.draw.rect(screen, (80, 0, 0), [50, 50, 200, 20], 0)
@@ -300,6 +305,7 @@ while True:
         # nome do jogador e do bot
         screen.blit(nomejogador, (10, 49))
         screen.blit(nomebot, (453, 49))
+
         # logica de ganha/perde
         if vidaKey == True:
             vidaKey = False
@@ -313,14 +319,13 @@ while True:
                     botVida -= 10
                 elif player == 3:
                     botVida -= 30
-
-        else:
-            if bot == 1:
-                playerVida -= 20
-            elif bot == 2:
-                playerVida -= 10
-            elif bot == 3:
-                playerVida -= 30
+            else:
+                if bot == 1:
+                    playerVida -= 20
+                elif bot == 2:
+                    playerVida -= 10
+                elif bot == 3:
+                    playerVida -= 30
 
         # caso ganhe ou perca
         if playerVida <= 0:
