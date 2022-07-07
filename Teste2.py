@@ -110,15 +110,12 @@ while True:
                     if blockTesoura == 3:
                         blockTesoura += 1
                     elif blockTesoura == 4:
-                        blockTesoura += 1
-                    elif blockTesoura == 5:
                         blockTesoura = 1
                     if blockPapel == 3:
                         blockPapel += 1
                     elif blockPapel == 4:
-                        blockPapel += 1
-                    elif blockPapel == 5:
                         blockPapel = 1
+                        
                 elif x < 340 and x > 250 and y > 440 and y < 580 and blockPapel < 3:
                     if blockPapel < 3:
                         blockPapel += 1
@@ -132,15 +129,12 @@ while True:
                     if blockPedra == 3:
                         blockPedra += 1
                     elif blockPedra == 4:
-                        blockPedra += 1
-                    elif blockPedra == 5:
                         blockPedra = 1
                     if blockTesoura == 3:
                         blockTesoura += 1
                     elif blockTesoura == 4:
-                        blockTesoura += 1
-                    elif blockTesoura == 5:
                         blockTesoura = 1
+                
                 elif x < 490 and x > 390 and y > 440 and y < 580 and blockTesoura < 3:
                     if blockTesoura < 3:
                         blockTesoura += 1
@@ -154,15 +148,12 @@ while True:
                     if blockPedra == 3:
                         blockPedra += 1
                     elif blockPedra == 4:
-                        blockPedra += 1
-                    elif blockPedra == 5:
                         blockPedra = 1
                     if blockPapel == 3:
                         blockPapel += 1
                     elif blockPapel == 4:
-                        blockPapel += 1
-                    elif blockPapel == 5:
                         blockPapel = 1
+                    
             # reset do jogo
             if Fim == True:
                 if x < 428 and x > 313 and y > 300 and y < 415:
@@ -227,8 +218,8 @@ while True:
         screen.blit(quadrado2, (230, 435))
         screen.blit(quadrado3, (370, 435))
         # botoes
-        screen.blit(pedra, (70, 417))
-        screen.blit(papel, (205, 405))
+        screen.blit(pedra, (70, 4113))
+        screen.blit(papel, (205, 400))
         screen.blit(tesoura, (350, 400))
 
         # mostra imagem player e animação da mao
@@ -272,7 +263,7 @@ while True:
         if blockTesoura > 2:
             screen.blit(quadrado3, (370, 435))
 
-        #texto-- True para apareer -- False para sumir 
+        # contador dos botões 
         text = cont.render(f'{blockPedra}', True, cor_branca)
         screen.blit(text, (90,435))
         text = cont.render(f'{blockPapel}', True, cor_branca)
