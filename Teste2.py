@@ -35,8 +35,8 @@ blockPedra = 1
 blockPapel = 1
 blockTesoura = 1
 # carregando imagens
-fundo = pygame.image.load(r'images/fundo mk.png')
-fundoMenu = pygame.image.load(r'images/fundoMenu.png')
+fundo = pygame.image.load(r'images/cenário/fundo mk.png')
+fundoMenu = pygame.image.load(r'images/cenário/fundoMenu.png')
 # jogador
 nomejogador = pygame.image.load(r'images/PLAYER/JOGADOR.png')
 pedra = pygame.image.load(r'images/PLAYER/Pedra.png')
@@ -53,14 +53,14 @@ bigPedra = pygame.image.load(r'images/bigmão/bigPedra.png')
 bigPapel = pygame.image.load(r'images/bigmão/bigPapel.png')
 bigTesoura = pygame.image.load(r'images/bigmão/bigTesoura.png')
 # outros
-perde = pygame.image.load(r'images/perde.png')
-ganha = pygame.image.load(r'images/ganha.png')
-again = pygame.image.load(r'images/again.png')
-playBtn = pygame.image.load(r'images/playBtn.png')
-goToMenu = pygame.image.load(r'images/goToMenu.png')
-quadrado1 = pygame.image.load(r'images/quadrados.png')
-quadrado2 = pygame.image.load(r'images/quadrados.png')
-quadrado3 = pygame.image.load(r'images/quadrados.png')
+perde = pygame.image.load(r'images/cenário/perde.png')
+ganha = pygame.image.load(r'images/cenário/ganha.png')
+again = pygame.image.load(r'images/cenário/again.png')
+playBtn = pygame.image.load(r'images/cenário/playBtn.png')
+goToMenu = pygame.image.load(r'images/cenário/goToMenu.png')
+quadrado1 = pygame.image.load(r'images/cenário/quadrados.png')
+quadrado2 = pygame.image.load(r'images/cenário/quadrados.png')
+quadrado3 = pygame.image.load(r'images/cenário/quadrados.png')
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
 papel = pygame.transform.scale(papel, (200, 205))
@@ -79,6 +79,20 @@ cor_branca = (255, 255, 255)
 font = pygame.font.get_default_font()
 cont = pygame.font.SysFont(font, 45)
 
+# iniciando musicas 
+pygame.mixer.init()
+
+# musicas e sons 
+pygame.mixer.music.load(r'audio/trilha-game.mp3')
+
+Menu_music = pygame.mixer.Sound(r'audio/menu musica.mp3')
+button = pygame.mixer.Sound(r'audio/botão click.mp3')
+
+#Volume
+pygame.mixer.music.set_volume(0.06) #trilha 
+pygame.mixer.Sound.set_volume(Menu_music, 0.02) # Menu
+pygame.mixer.Sound.set_volume(button, 0.04) # button
+
 # loop principal
 while True:
 
@@ -94,19 +108,22 @@ while True:
         if event.type == pygame.MOUSEBUTTONUP:
             if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
                 Menu = False
+                #inicia musica 
+                Menu_music.stop()
+                pygame.mixer.music.play(-1)
 
             if modoJogo == True:
                 
                 if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
-                    if blockPedra < 3:
-                        blockPedra += 1
-                        if blockPapel == 2:
-                            blockPapel -= 1
-                        if blockTesoura == 2:
-                            blockTesoura -= 1
-                        player = 1
-                        modoJogo = False
-                        chave = False
+                    button.play()
+                    blockPedra += 1
+                    if blockPapel == 2:
+                        blockPapel -= 1
+                    if blockTesoura == 2:
+                        blockTesoura -= 1
+                    player = 1
+                    modoJogo = False
+                    chave = False
                     if blockTesoura == 3:
                         blockTesoura += 1
                     elif blockTesoura == 4:
@@ -117,15 +134,15 @@ while True:
                         blockPapel = 1
                         
                 elif x < 340 and x > 250 and y > 440 and y < 580 and blockPapel < 3:
-                    if blockPapel < 3:
-                        blockPapel += 1
-                        if blockPedra == 2:
-                            blockPedra -= 1
-                        if blockTesoura == 2:
-                            blockTesoura -= 1
-                        player = 2
-                        modoJogo = False
-                        chave = False
+                    button.play()
+                    blockPapel += 1
+                    if blockPedra == 2:
+                        blockPedra -= 1
+                    if blockTesoura == 2:
+                        blockTesoura -= 1
+                    player = 2
+                    modoJogo = False
+                    chave = False
                     if blockPedra == 3:
                         blockPedra += 1
                     elif blockPedra == 4:
@@ -136,15 +153,15 @@ while True:
                         blockTesoura = 1
                 
                 elif x < 490 and x > 390 and y > 440 and y < 580 and blockTesoura < 3:
-                    if blockTesoura < 3:
-                        blockTesoura += 1
-                        if blockPedra == 2:
-                            blockPedra -= 1
-                        if blockPapel == 2:
-                            blockPapel -= 1
-                        player = 3
-                        modoJogo = False
-                        chave = False
+                    button.play()
+                    blockTesoura += 1
+                    if blockPedra == 2:
+                        blockPedra -= 1
+                    if blockPapel == 2:
+                        blockPapel -= 1
+                    player = 3
+                    modoJogo = False
+                    chave = False
                     if blockPedra == 3:
                         blockPedra += 1
                     elif blockPedra == 4:
@@ -156,8 +173,10 @@ while True:
                     
             # reset do jogo
             if Fim == True:
+                #voltar pro menu
                 if x < 428 and x > 313 and y > 300 and y < 415:
                     Menu = True
+                    pygame.mixer.music.stop()
                     player = 0
                     bot = 0
                     blockPedra = 1
@@ -174,6 +193,7 @@ while True:
                     py = 150
                     pv = 3
                     by = 150
+                # jogar de novo 
                 if x < 286 and x > 170 and y > 300 and y < 415:
                     player = 0
                     bot = 0
@@ -196,6 +216,7 @@ while True:
     
     #menu
     if Menu == True:
+        Menu_music.play(-1)
         #fundo
         screen.blit(fundoMenu, (0, 0))
         screen.blit(playBtn, (240, 250))
