@@ -1,16 +1,19 @@
+#//////////iniciando variaveis e importaçoes////////////#
+
 # implementação da bibliotecas
 import pygame
 from pygame.locals import *
 from random import randint
-
+# importando outras abas
+import aba
 # inicia janela do pygame
 pygame.init()
 screen = pygame.display.set_mode((600, 600))
 pygame.display.set_caption('PedraPapelTesoura')
 
 # jogada e vida do player e bot
-player = 0
-bot = 0
+player = 0 
+bot = 0 
 playerVida = 200
 botVida = 200
 
@@ -34,6 +37,7 @@ textMuve = 20
 blockPedra = 1
 blockPapel = 1
 blockTesoura = 1
+
 # carregando imagens
 fundo = pygame.image.load(r'images/cenário/fundo mk.png')
 fundoMenu = pygame.image.load(r'images/cenário/fundoMenu.png')
@@ -50,7 +54,7 @@ botPapel = pygame.image.load(r'images/BOT/botPapel.png')
 botTesoura = pygame.image.load(r'images/BOT/botTesoura.png')
 # mãobig
 bigPedra = pygame.image.load(r'images/bigmão/bigPedra.png')
-bigPapel = pygame.image.load(r'images/bigmão/bigPapel.png')
+bigPapel = pygame.image.load(r'images/bigmão/bigPapel.png')    
 bigTesoura = pygame.image.load(r'images/bigmão/bigTesoura.png')
 # outros
 perde = pygame.image.load(r'images/cenário/perde.png')
@@ -61,6 +65,7 @@ goToMenu = pygame.image.load(r'images/cenário/goToMenu.png')
 quadrado1 = pygame.image.load(r'images/cenário/quadrados.png')
 quadrado2 = pygame.image.load(r'images/cenário/quadrados.png')
 quadrado3 = pygame.image.load(r'images/cenário/quadrados.png')
+
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
 papel = pygame.transform.scale(papel, (200, 205))
@@ -72,6 +77,7 @@ bot0 = pygame.transform.scale(bot0, (150, 150))
 botPedra = pygame.transform.scale(botPedra, (150, 150))
 botPapel = pygame.transform.scale(botPapel, (150, 150))
 botTesoura = pygame.transform.scale(botTesoura, (150, 150))
+
 
 #iniciando textos 
 pygame.font.init()
@@ -93,124 +99,16 @@ pygame.mixer.music.set_volume(0.5) #trilha
 pygame.mixer.Sound.set_volume(Menu_music, 0.5) # Menu
 pygame.mixer.Sound.set_volume(button, 1) # button
 
+
+
+
+
+#//////////loop principal do jogo, e utilização de todas variaveis////////////#
+
 # loop principal
 while True:
-
-    # pega posição do mouse
-    x, y = pygame.mouse.get_pos()
-
     # para imput de botoes e clicks
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            quit()
-        # erro: criar variavel de rodada para ficar duas e não só uma
-        if event.type == pygame.MOUSEBUTTONUP:
-            if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
-                Menu = False
-                #inicia musica 
-                Menu_music.stop()
-                pygame.mixer.music.play(-1)
-
-            if modoJogo == True:
-                
-                if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
-                    button.play()
-                    blockPedra += 1
-                    if blockPapel == 2:
-                        blockPapel -= 1
-                    if blockTesoura == 2:
-                        blockTesoura -= 1
-                    player = 1
-                    modoJogo = False
-                    chave = False
-                    if blockTesoura == 3:
-                        blockTesoura += 1
-                    elif blockTesoura == 4:
-                        blockTesoura = 1
-                    if blockPapel == 3:
-                        blockPapel += 1
-                    elif blockPapel == 4:
-                        blockPapel = 1
-                        
-                elif x < 340 and x > 250 and y > 440 and y < 580 and blockPapel < 3:
-                    button.play()
-                    blockPapel += 1
-                    if blockPedra == 2:
-                        blockPedra -= 1
-                    if blockTesoura == 2:
-                        blockTesoura -= 1
-                    player = 2
-                    modoJogo = False
-                    chave = False
-                    if blockPedra == 3:
-                        blockPedra += 1
-                    elif blockPedra == 4:
-                        blockPedra = 1
-                    if blockTesoura == 3:
-                        blockTesoura += 1
-                    elif blockTesoura == 4:
-                        blockTesoura = 1
-                
-                elif x < 490 and x > 390 and y > 440 and y < 580 and blockTesoura < 3:
-                    button.play()
-                    blockTesoura += 1
-                    if blockPedra == 2:
-                        blockPedra -= 1
-                    if blockPapel == 2:
-                        blockPapel -= 1
-                    player = 3
-                    modoJogo = False
-                    chave = False
-                    if blockPedra == 3:
-                        blockPedra += 1
-                    elif blockPedra == 4:
-                        blockPedra = 1
-                    if blockPapel == 3:
-                        blockPapel += 1
-                    elif blockPapel == 4:
-                        blockPapel = 1
-                    
-            # reset do jogo
-            if Fim == True:
-                #voltar pro menu
-                if x < 428 and x > 313 and y > 300 and y < 415:
-                    Menu = True
-                    pygame.mixer.music.stop()
-                    player = 0
-                    bot = 0
-                    blockPedra = 1
-                    blockPapel = 1
-                    blockTesoura = 1
-                    playerVida = 200
-                    botVida = 200
-                    modoJogo = True
-                    chave = True
-                    chaveA = 0
-                    botKey = False
-                    vidaKey = False
-                    Fim = False
-                    py = 150
-                    pv = 3
-                    by = 150
-                # jogar de novo 
-                if x < 286 and x > 170 and y > 300 and y < 415:
-                    player = 0
-                    bot = 0
-                    blockPedra = 1
-                    blockPapel = 1
-                    blockTesoura = 1
-                    playerVida = 200
-                    botVida = 200
-                    modoJogo = True
-                    chave = True
-                    chaveA = 0
-                    botKey = False
-                    vidaKey = False
-                    Fim = False
-                    py = 150
-                    pv = 3
-                    by = 150
+    aba.botoes()        
     # reloading da tela
     screen.fill((0, 0, 0))
     
