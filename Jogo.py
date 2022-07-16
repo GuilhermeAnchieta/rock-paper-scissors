@@ -83,15 +83,15 @@ cont = pygame.font.SysFont(font, 45)
 pygame.mixer.init()
 
 # musicas e sons 
-pygame.mixer.music.load(r'audio/trilha-game.mp3')
+pygame.mixer.music.load(r'audio/trilha-game.wav')
 
-Menu_music = pygame.mixer.Sound(r'audio/menu musica.mp3')
-button = pygame.mixer.Sound(r'audio/botão click.mp3')
+Menu_music = pygame.mixer.Sound(r'audio/menu musica.wav')
+button = pygame.mixer.Sound(r'audio/botão click.wav')
 
 #Volume
-pygame.mixer.music.set_volume(0.06) #trilha 
-pygame.mixer.Sound.set_volume(Menu_music, 0.02) # Menu
-pygame.mixer.Sound.set_volume(button, 0.04) # button
+pygame.mixer.music.set_volume(0.5) #trilha 
+pygame.mixer.Sound.set_volume(Menu_music, 0.5) # Menu
+pygame.mixer.Sound.set_volume(button, 1) # button
 
 # loop principal
 while True:
