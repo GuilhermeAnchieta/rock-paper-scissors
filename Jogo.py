@@ -38,33 +38,8 @@ blockPedra = 1
 blockPapel = 1
 blockTesoura = 1
 
-# carregando imagens
-fundo = pygame.image.load(r'images/cenário/fundo mk.png')
-fundoMenu = pygame.image.load(r'images/cenário/fundoMenu.png')
-# jogador
-nomejogador = pygame.image.load(r'images/PLAYER/JOGADOR.png')
-pedra = pygame.image.load(r'images/PLAYER/Pedra.png')
-papel = pygame.image.load(r'images/PLAYER/Papel.png')
-tesoura = pygame.image.load(r'images/PLAYER/Tesoura.png')
-# bot
-nomebot = pygame.image.load(r'images/BOT/BOT.png')
-bot0 = pygame.image.load(r'images/BOT/bot0.png')
-botPedra = pygame.image.load(r'images/BOT/botPedra.png')
-botPapel = pygame.image.load(r'images/BOT/botPapel.png')
-botTesoura = pygame.image.load(r'images/BOT/botTesoura.png')
-# mãobig
-bigPedra = pygame.image.load(r'images/bigmão/bigPedra.png')
-bigPapel = pygame.image.load(r'images/bigmão/bigPapel.png')    
-bigTesoura = pygame.image.load(r'images/bigmão/bigTesoura.png')
-# outros
-perde = pygame.image.load(r'images/cenário/perde.png')
-ganha = pygame.image.load(r'images/cenário/ganha.png')
-again = pygame.image.load(r'images/cenário/again.png')
-playBtn = pygame.image.load(r'images/cenário/playBtn.png')
-goToMenu = pygame.image.load(r'images/cenário/goToMenu.png')
-quadrado1 = pygame.image.load(r'images/cenário/quadrados.png')
-quadrado2 = pygame.image.load(r'images/cenário/quadrados.png')
-quadrado3 = pygame.image.load(r'images/cenário/quadrados.png')
+# importa todas as imagens do jogo 
+fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel , botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3 = aba.imagens()
 
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
@@ -96,12 +71,8 @@ button = pygame.mixer.Sound(r'audio/botão click.wav')
 
 #Volume
 pygame.mixer.music.set_volume(0.5) #trilha 
-pygame.mixer.Sound.set_volume(Menu_music, 0.5) # Menu
+pygame.mixer.Sound.set_volume(Menu_music, 0.1) # Menu
 pygame.mixer.Sound.set_volume(button, 0.1) # button
-
-
-
-
 
 #//////////loop principal do jogo, e utilização de todas variaveis////////////#
 
@@ -145,7 +116,8 @@ while True:
                     Menu,player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by = aba.OpVoltaMenu(Menu,player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by)
                 # jogar de novo 
                 if x < 286 and x > 170 and y > 300 and y < 415:
-                    player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by = aba.OpReplay(player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by)        
+                    player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by = aba.OpReplay(player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by) 
+                           
     # reloading da tela
     screen.fill((0, 0, 0))
     
