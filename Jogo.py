@@ -37,9 +37,11 @@ textMuve = 20
 blockPedra = 1
 blockPapel = 1
 blockTesoura = 1
+# som On/off
+som = True
 
 # importa todas as imagens do jogo 
-fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel , botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3 = aba.imagens()
+fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel , botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3, sound_on, sound_off = aba.imagens()
 
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
@@ -52,6 +54,8 @@ bot0 = pygame.transform.scale(bot0, (150, 150))
 botPedra = pygame.transform.scale(botPedra, (150, 150))
 botPapel = pygame.transform.scale(botPapel, (150, 150))
 botTesoura = pygame.transform.scale(botTesoura, (150, 150))
+sound_on = pygame.transform.scale(sound_on, (50, 50))
+sound_off = pygame.transform.scale(sound_off, (50, 45))
 
 
 #iniciando textos 
@@ -64,13 +68,13 @@ cont = pygame.font.SysFont(font, 45)
 pygame.mixer.init()
 
 # musicas e sons 
-pygame.mixer.music.load(r'audio/trilha-game.wav')
+trilha = pygame.mixer.Sound(r'audio/trilha-game.wav')
 
 Menu_music = pygame.mixer.Sound(r'audio/menu musica.wav')
 button = pygame.mixer.Sound(r'audio/botão click.wav')
 
 #Volume
-pygame.mixer.music.set_volume(0.5) #trilha 
+pygame.mixer.Sound.set_volume(trilha, 0.1) #trilha 
 pygame.mixer.Sound.set_volume(Menu_music, 0.1) # Menu
 pygame.mixer.Sound.set_volume(button, 0.1) # button
 
@@ -88,12 +92,26 @@ while True:
                 quit()
         # erro: criar variavel de rodada para ficar duas e não só uma
         if event.type == pygame.MOUSEBUTTONUP:
+            # som do jogo 
+            if  x > 552 and  x < 597 and y > 552 and y < 595:
+                if som == True:
+                    som = False
+                    Menu_music.stop()
+                    trilha.stop()
+                elif som == False:
+                    som = True
+                    if Menu == True:
+                        Menu_music.play(-1)
+                    if Menu == False:
+                        trilha.play(-1)
+
             #botao menu
             if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
                 Menu = False
                 #inicia musica 
                 Menu_music.stop()
-                pygame.mixer.music.play(-1)
+                if som == True:
+                    trilha.play(-1)
             #logica dos botoes
             if modoJogo == True:
                 if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
@@ -112,7 +130,7 @@ while True:
             if Fim == True:
                 #voltar pro menu
                 if x < 428 and x > 313 and y > 300 and y < 415:
-                    pygame.mixer.music.stop()
+                    trilha.stop()
                     Menu,player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by = aba.OpVoltaMenu(Menu,player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,modoJogo,chave,chaveA,botKey,vidaKey,Fim,py,pv,by)
                 # jogar de novo 
                 if x < 286 and x > 170 and y > 300 and y < 415:
@@ -123,7 +141,8 @@ while True:
     
     #menu
     if Menu == True:
-        Menu_music.play(-1)
+        if som == True:
+            Menu_music.play(-1)
         #fundo
         screen.blit(fundoMenu, (0, 0))
         screen.blit(playBtn, (240, 250))
@@ -266,5 +285,11 @@ while True:
         if Fim == True:
             screen.blit(again, (170, 300))
             screen.blit(goToMenu, (310, 300))
-        # refresh da tela
+    # Imagens som on/off
+    if som == True:
+        screen.blit(sound_on, (550, 550))
+    else:
+        screen.blit(sound_off, (552, 550))
+
+    # refresh da tela
     pygame.display.update()

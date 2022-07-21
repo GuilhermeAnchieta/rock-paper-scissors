@@ -128,5 +128,9 @@ def imagens():
     quadrado1 = pygame.image.load(r'images/cenário/quadrados.png')
     quadrado2 = pygame.image.load(r'images/cenário/quadrados.png')
     quadrado3 = pygame.image.load(r'images/cenário/quadrados.png')
+    # som
+    sound_on = pygame.image.load(r'images/cenário/Sound on.png')
+    sound_off = pygame.image.load(r'images/cenário/Sound off.png')
 
-    return fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel , botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3
+
+    return fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel , botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3, sound_on, sound_off
