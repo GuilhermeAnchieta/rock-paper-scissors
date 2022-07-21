@@ -69,14 +69,13 @@ pygame.mixer.init()
 
 # musicas e sons 
 trilha = pygame.mixer.Sound(r'audio/trilha-game.wav')
-
 Menu_music = pygame.mixer.Sound(r'audio/menu musica.wav')
 button = pygame.mixer.Sound(r'audio/botão click.wav')
 
 #Volume
-pygame.mixer.Sound.set_volume(trilha, 0.1) #trilha 
+pygame.mixer.Sound.set_volume(trilha, 0.4) #trilha 
 pygame.mixer.Sound.set_volume(Menu_music, 0.1) # Menu
-pygame.mixer.Sound.set_volume(button, 0.1) # button
+pygame.mixer.Sound.set_volume(button, 0.2) # button
 
 #//////////loop principal do jogo, e utilização de todas variaveis////////////#
 
@@ -102,7 +101,7 @@ while True:
                     som = True
                     if Menu == True:
                         Menu_music.play(-1)
-                    if Menu == False:
+                    elif Menu == False:
                         trilha.play(-1)
 
             #botao menu
