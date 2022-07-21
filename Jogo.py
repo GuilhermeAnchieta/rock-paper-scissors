@@ -55,7 +55,7 @@ botPedra = pygame.transform.scale(botPedra, (150, 150))
 botPapel = pygame.transform.scale(botPapel, (150, 150))
 botTesoura = pygame.transform.scale(botTesoura, (150, 150))
 sound_on = pygame.transform.scale(sound_on, (50, 50))
-sound_off = pygame.transform.scale(sound_off, (50, 45))
+sound_off = pygame.transform.scale(sound_off, (50, 50))
 
 
 #iniciando textos 
@@ -286,9 +286,9 @@ while True:
             screen.blit(goToMenu, (310, 300))
     # Imagens som on/off
     if som == True:
-        screen.blit(sound_on, (550, 550))
+        screen.blit(sound_on, (549, 550))
     else:
-        screen.blit(sound_off, (552, 550))
+        screen.blit(sound_off, (549, 550))
 
     # refresh da tela
     pygame.display.update()
