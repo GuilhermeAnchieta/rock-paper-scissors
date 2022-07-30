@@ -33,6 +33,8 @@ by = 150
 tv = 0.1
 #animacao de titulo
 textMuve = 20
+textMove = 600
+textMoveKey = False
 # bloqueador de opção
 blockPedra = 1
 blockPapel = 1
@@ -84,6 +86,7 @@ while True:
     # para imput de botoes e clicks
         # pega posição do mouse
     x, y = pygame.mouse.get_pos()
+    #print ("y: ", y)
 
     for event in pygame.event.get():    
         if event.type == pygame.QUIT:
@@ -111,6 +114,10 @@ while True:
                 Menu_music.stop()
                 if som == True:
                     trilha.play(-1)
+            if Menu == True and textMoveKey == False and x > 550 and y > 290 and y < 340:
+                textMoveKey = True
+            elif Menu == True and textMoveKey == True and x > 550 and y > 290 and y < 340:
+                textMoveKey = False
             #logica dos botoes
             if modoJogo == True:
                 if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
@@ -156,6 +163,28 @@ while True:
         font = pygame.font.SysFont(None, 30)
         img = font.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50,50,50))
         screen.blit(img, (20, 580))
+        #area de como jogar
+        font = pygame.font.SysFont(None, 30)
+        img = font.render('Texto de Exemplo', True, (10,10,50))
+        screen.blit(img, (textMove, 240))
+        img = font.render('Texto de Exemplo', True, (10,10,50))
+        screen.blit(img, (textMove, 270))
+        img = font.render('Texto de Exemplo', True, (10,10,50))
+        screen.blit(img, (textMove, 300))
+        img = font.render('Texto de Exemplo', True, (10,10,50))
+        screen.blit(img, (textMove, 330))
+        if textMoveKey:
+            if textMove > 370:
+                textMove-=1
+        elif textMove < 600:
+            textMove+=1
+        font = pygame.font.SysFont(None, 80)
+        if textMoveKey:
+            img = font.render('>', True, (200,0,0))
+            screen.blit(img, (570, 280))
+        else:
+            img = font.render('<', True, (0,200,0))
+            screen.blit(img, (570, 280))
     #jogo
     elif Menu == False:
         screen.blit(fundo, (0, 0))
