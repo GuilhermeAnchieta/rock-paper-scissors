@@ -35,6 +35,8 @@ tv = 0.1
 textMuve = 20
 textMove = 600
 textMoveKey = False
+TextRotate = 0
+textGrau = 0.01
 # bloqueador de opção
 blockPedra = 1
 blockPapel = 1
@@ -154,9 +156,13 @@ while True:
         screen.blit(playBtn, (240, 250))
         #titulp
         font = pygame.font.SysFont(None, 80)
-        img = font.render('Rock Paper Scissors', True, (10,25,55))
-        screen.blit(img, (20, textMuve))
+        text = font.render('Rock Paper Scissors', True, (10,25,55))
+        text = pygame.transform.rotate(text, TextRotate)
+        screen.blit(text, (20, textMuve))
         textMuve += tv
+        TextRotate+=textGrau
+        if TextRotate > 10 or TextRotate < -10:
+            textGrau*=-1
         if textMuve > 150 or textMuve < 5:
             tv *= -1
         #devs
