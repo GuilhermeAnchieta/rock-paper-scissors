@@ -103,7 +103,7 @@ def OpReplay(player,bot,blockPedra,blockPapel,blockTesoura,playerVida,botVida,mo
 def imagens():
     # carregando imagens
     fundo = pygame.image.load(r'images/cenário/fundo mk.png')
-    fundoMenu = pygame.image.load(r'images/cenário/fundoMenu.png')
+    fundoMenu = pygame.image.load(r'images/cenário/menu-fogov2.png')
     # jogador
     nomejogador = pygame.image.load(r'images/PLAYER/JOGADOR.png')
     pedra = pygame.image.load(r'images/PLAYER/Pedra.png')
