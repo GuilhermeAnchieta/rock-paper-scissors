@@ -45,7 +45,7 @@ blockTesoura = 1
 som = True
 
 # importa todas as imagens do jogo
-fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel, botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3, sound_on, sound_off = aba.imagens()
+fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel, botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3, regras, setared, setagreen, sound_on, sound_off = aba.imagens()
 
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
@@ -60,7 +60,9 @@ botPapel = pygame.transform.scale(botPapel, (150, 150))
 botTesoura = pygame.transform.scale(botTesoura, (150, 150))
 sound_on = pygame.transform.scale(sound_on, (50, 50))
 sound_off = pygame.transform.scale(sound_off, (50, 50))
-
+regras = pygame.transform.scale(regras, (320, 200))
+setared = pygame.transform.scale(setared, (55, 45))
+setagreen = pygame.transform.scale(setagreen, (55, 45))
 
 # iniciando textos
 pygame.font.init()
@@ -172,31 +174,22 @@ while True:
             tv *= -1
         # devs
         font = pygame.font.SysFont(None, 30)
-        img = font.render(
-            'SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50, 50, 50))
+        img = font.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50, 50, 50))
         screen.blit(img, (20, 580))
+        
         # area de como jogar
         font = pygame.font.SysFont(None, 30)
-        img = font.render('Texto de Exemplo', True, (10, 10, 50))
-        screen.blit(img, (textMove, 240))
-        img = font.render('Texto de Exemplo', True, (10, 10, 50))
-        screen.blit(img, (textMove, 270))
-        img = font.render('Texto de Exemplo', True, (10, 10, 50))
-        screen.blit(img, (textMove, 300))
-        img = font.render('Texto de Exemplo', True, (10, 10, 50))
-        screen.blit(img, (textMove, 330))
+        screen.blit(regras, (textMove, 365))
         if textMoveKey:
-            if textMove > 370:
-                textMove -= 1
+            if textMove > 170:
+                textMove -= 1.5
         elif textMove < 600:
-            textMove += 1
+            textMove += 1.5
         font = pygame.font.SysFont(None, 80)
         if textMoveKey:
-            img = font.render('>', True, (200, 0, 0))
-            screen.blit(img, (570, 280))
+            screen.blit(setared, (540, 280))
         else:
-            img = font.render('<', True, (0, 200, 0))
-            screen.blit(img, (570, 280))
+            screen.blit(setagreen, (540, 280))
     # jogo
     elif Menu == False:
         screen.blit(fundo, (0, 0))
