@@ -128,14 +128,12 @@ def imagens():
     quadrado1 = pygame.image.load(r'images/cenário/quadrados.png')
     quadrado2 = pygame.image.load(r'images/cenário/quadrados.png')
     quadrado3 = pygame.image.load(r'images/cenário/quadrados.png')
-    regras = pygame.image.load(r'rules.png')
-    setared = pygame.image.load(r'seta vermelha.png')
-    setagreen = pygame.image.load(r'seta verde.png')
+    regras = pygame.image.load(r'images/cenário/rules.png')
+    setared = pygame.image.load(r'images/cenário/seta vermelha.png')
+    setagreen = pygame.image.load(r'images/cenário/seta verde.png')
     # som
     sound_on = pygame.image.load(r'images/cenário/som ligado.png')
     sound_off = pygame.image.load(r'images/cenário/som desligado.png')
     
     
-
-
     return fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel , botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3, regras, setared, setagreen, sound_on, sound_off

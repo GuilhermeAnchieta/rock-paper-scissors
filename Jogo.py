@@ -68,7 +68,10 @@ setagreen = pygame.transform.scale(setagreen, (55, 45))
 pygame.font.init()
 cor_branca = (255, 255, 255)
 font = pygame.font.get_default_font()
-cont = pygame.font.SysFont(font, 45)
+fontblock = pygame.font.SysFont(font, 45)
+fontDev = pygame.font.SysFont(font, 30)
+fontMK = pygame.font.Font('Fontes/MKX title.ttf', 60)
+fontmk1 = pygame.font.Font('Fontes/mk1.ttf', 30)
 
 # iniciando musicas
 pygame.mixer.init()
@@ -90,13 +93,15 @@ while True:
     # para imput de botoes e clicks
     # pega posição do mouse
     x, y = pygame.mouse.get_pos()
-    #print ("y: ", y)
+   
+    # Caso precise saber alguma posição, só tirar o #
+    #print(x,y)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
-        # erro: criar variavel de rodada para ficar duas e não só uma
+
         if event.type == pygame.MOUSEBUTTONUP:
             # som do jogo
             if x > 552 and x < 597 and y > 552 and y < 595:
@@ -113,15 +118,18 @@ while True:
 
             # botao menu
             if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
+                textMoveKey = False
                 Menu = False
                 # inicia musica
                 Menu_music.stop()
                 if som == True:
                     trilha.play(-1)
-            if Menu == True and textMoveKey == False and x > 550 and y > 290 and y < 340:
+
+            if Menu == True and textMoveKey == False and x > 540 and y > 330 and y < 370:
                 textMoveKey = True
-            elif Menu == True and textMoveKey == True and x > 550 and y > 290 and y < 340:
+            elif Menu == True and textMoveKey == True and x > 540 and y > 300 and y < 370:
                 textMoveKey = False
+
             # logica dos botoes
             if modoJogo == True:
                 if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
@@ -161,8 +169,8 @@ while True:
         # fundo
         screen.blit(fundoMenu, (0, 0))
         screen.blit(playBtn, (240, 250))
-        # titulp
-        fontMK = pygame.font.Font('Fontes/MKX title.ttf', 60)
+
+        # titulo
         text = fontMK.render('@ Rock Paper Scissors', True, (10, 25, 55))
         text = pygame.transform.rotate(text, TextRotate)
         screen.blit(text, (20, textMuve))
@@ -172,24 +180,25 @@ while True:
             textGrau *= -1
         if textMuve > 150 or textMuve < 5:
             tv *= -1
+
         # devs
-        font = pygame.font.SysFont(None, 30)
-        img = font.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50, 50, 50))
+        img = fontDev.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50, 50, 50))
         screen.blit(img, (20, 580))
-        
+
         # area de como jogar
-        font = pygame.font.SysFont(None, 30)
-        screen.blit(regras, (textMove, 365))
+        screen.blit(regras, (textMove, 365))  
+        textRule = fontmk1.render('Regras', True, (0, 0, 0))
+        screen.blit(textRule, (530, 300))
         if textMoveKey:
             if textMove > 170:
                 textMove -= 1.5
         elif textMove < 600:
             textMove += 1.5
-        font = pygame.font.SysFont(None, 80)
         if textMoveKey:
-            screen.blit(setared, (540, 280))
+            screen.blit(setared, (540, 330))
         else:
-            screen.blit(setagreen, (540, 280))
+            screen.blit(setagreen, (540, 330))
+
     # jogo
     elif Menu == False:
         screen.blit(fundo, (0, 0))
@@ -244,12 +253,12 @@ while True:
             screen.blit(quadrado3, (370, 435))
 
         # contador dos botões
-        text = cont.render(f'{blockPedra}', True, cor_branca)
-        screen.blit(text, (90, 435))
-        text = cont.render(f'{blockPapel}', True, cor_branca)
-        screen.blit(text, (230, 435))
-        text = cont.render(f'{blockTesoura}', True, cor_branca)
-        screen.blit(text, (370, 435))
+        #text = fontblock.render(f'{blockPedra}', True, cor_branca)
+        #screen.blit(text, (90, 435))
+        #text = fontblock.render(f'{blockPapel}', True, cor_branca)
+        #screen.blit(text, (230, 435))
+        #text = fontblock.render(f'{blockTesoura}', True, cor_branca)
+        #screen.blit(text, (370, 435))
 
         # escolha do bot,
         if botKey == True:
