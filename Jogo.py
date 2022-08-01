@@ -1,8 +1,11 @@
+#//////////iniciando variaveis e importaçoes////////////#
+
 # implementação da bibliotecas
 import pygame
 from pygame.locals import *
 from random import randint
-
+# importando outras abas
+import aba
 # inicia janela do pygame
 pygame.init()
 screen = pygame.display.set_mode((600, 600))
@@ -28,39 +31,22 @@ py = 150
 pv = 2.5
 by = 150
 tv = 0.1
-#animacao de titulo
+# animacao de titulo
 textMuve = 20
+textMove = 600
+textMoveKey = False
+TextRotate = 0
+textGrau = 0.01
 # bloqueador de opção
 blockPedra = 1
 blockPapel = 1
 blockTesoura = 1
-# carregando imagens
-fundo = pygame.image.load(r'images/fundo mk.png')
-fundoMenu = pygame.image.load(r'images/fundoMenu.png')
-# jogador
-nomejogador = pygame.image.load(r'images/PLAYER/JOGADOR.png')
-pedra = pygame.image.load(r'images/PLAYER/Pedra.png')
-papel = pygame.image.load(r'images/PLAYER/Papel.png')
-tesoura = pygame.image.load(r'images/PLAYER/Tesoura.png')
-# bot
-nomebot = pygame.image.load(r'images/BOT/BOT.png')
-bot0 = pygame.image.load(r'images/BOT/bot0.png')
-botPedra = pygame.image.load(r'images/BOT/botPedra.png')
-botPapel = pygame.image.load(r'images/BOT/botPapel.png')
-botTesoura = pygame.image.load(r'images/BOT/botTesoura.png')
-# mãobig
-bigPedra = pygame.image.load(r'images/bigmão/bigPedra.png')
-bigPapel = pygame.image.load(r'images/bigmão/bigPapel.png')
-bigTesoura = pygame.image.load(r'images/bigmão/bigTesoura.png')
-# outros
-perde = pygame.image.load(r'images/perde.png')
-ganha = pygame.image.load(r'images/ganha.png')
-again = pygame.image.load(r'images/again.png')
-playBtn = pygame.image.load(r'images/playBtn.png')
-goToMenu = pygame.image.load(r'images/goToMenu.png')
-quadrado1 = pygame.image.load(r'images/quadrados.png')
-quadrado2 = pygame.image.load(r'images/quadrados.png')
-quadrado3 = pygame.image.load(r'images/quadrados.png')
+# som On/off
+som = True
+
+# importa todas as imagens do jogo
+fundo, fundoMenu, nomejogador, pedra, papel, tesoura, nomebot, bot0, botPedra, botPapel, botTesoura, bigPedra, bigPapel, bigTesoura, perde, ganha, again, playBtn, goToMenu, quadrado1, quadrado2, quadrado3, regras, setared, setagreen, sound_on, sound_off = aba.imagens()
+
 # tamanho das imagens
 pedra = pygame.transform.scale(pedra, (200, 205))
 papel = pygame.transform.scale(papel, (200, 205))
@@ -72,154 +58,148 @@ bot0 = pygame.transform.scale(bot0, (150, 150))
 botPedra = pygame.transform.scale(botPedra, (150, 150))
 botPapel = pygame.transform.scale(botPapel, (150, 150))
 botTesoura = pygame.transform.scale(botTesoura, (150, 150))
+sound_on = pygame.transform.scale(sound_on, (50, 50))
+sound_off = pygame.transform.scale(sound_off, (50, 50))
+regras = pygame.transform.scale(regras, (320, 200))
+setared = pygame.transform.scale(setared, (55, 45))
+setagreen = pygame.transform.scale(setagreen, (55, 45))
 
-#iniciando textos 
+# iniciando textos
 pygame.font.init()
 cor_branca = (255, 255, 255)
 font = pygame.font.get_default_font()
-cont = pygame.font.SysFont(font, 45)
+fontblock = pygame.font.SysFont(font, 45)
+fontDev = pygame.font.SysFont(font, 30)
+fontMK = pygame.font.Font('Fontes/MKX title.ttf', 60)
+fontmk1 = pygame.font.Font('Fontes/mk1.ttf', 30)
+
+# iniciando musicas
+pygame.mixer.init()
+
+# musicas e sons
+trilha = pygame.mixer.Sound(r'audio/trilha-game.wav')
+Menu_music = pygame.mixer.Sound(r'audio/menu musica.wav')
+button = pygame.mixer.Sound(r'audio/botão click.wav')
+
+# Volume
+pygame.mixer.Sound.set_volume(trilha, 0.4)  # trilha
+pygame.mixer.Sound.set_volume(Menu_music, 0.1)  # Menu
+pygame.mixer.Sound.set_volume(button, 0.2)  # button
+
+#//////////loop principal do jogo, e utilização de todas variaveis////////////#
 
 # loop principal
 while True:
-
+    # para imput de botoes e clicks
     # pega posição do mouse
     x, y = pygame.mouse.get_pos()
+   
+    # Caso precise saber alguma posição, só tirar o #
+    #print(x,y)
 
-    # para imput de botoes e clicks
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
-        # erro: criar variavel de rodada para ficar duas e não só uma
-        if event.type == pygame.MOUSEBUTTONUP:
-            if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
-                Menu = False
 
+        if event.type == pygame.MOUSEBUTTONUP:
+            # som do jogo
+            if x > 552 and x < 597 and y > 552 and y < 595:
+                if som == True:
+                    som = False
+                    Menu_music.stop()
+                    trilha.stop()
+                elif som == False:
+                    som = True
+                    if Menu == True:
+                        Menu_music.play(-1)
+                    elif Menu == False:
+                        trilha.play(-1)
+
+            # botao menu
+            if Menu == True and x > 240 and x < 360 and y > 250 and y < 366:
+                textMoveKey = False
+                Menu = False
+                # inicia musica
+                Menu_music.stop()
+                if som == True:
+                    trilha.play(-1)
+
+            if Menu == True and textMoveKey == False and x > 540 and y > 330 and y < 370:
+                textMoveKey = True
+            elif Menu == True and textMoveKey == True and x > 540 and y > 300 and y < 370:
+                textMoveKey = False
+
+            # logica dos botoes
             if modoJogo == True:
-                
                 if x < 190 and x > 80 and y > 440 and y < 580 and blockPedra < 3:
-                    if blockPedra < 3:
-                        blockPedra += 1
-                        if blockPapel == 2:
-                            blockPapel -= 1
-                        if blockTesoura == 2:
-                            blockTesoura -= 1
-                        player = 1
-                        modoJogo = False
-                        chave = False
-                    if blockTesoura == 3:
-                        blockTesoura += 1
-                    elif blockTesoura == 4:
-                        blockTesoura += 1
-                    elif blockTesoura == 5:
-                        blockTesoura = 1
-                    if blockPapel == 3:
-                        blockPapel += 1
-                    elif blockPapel == 4:
-                        blockPapel += 1
-                    elif blockPapel == 5:
-                        blockPapel = 1
+                    button.play()
+                    blockPedra, blockPapel, blockTesoura, player, modoJogo, chave = aba.OpPedra(
+                        blockPedra, blockPapel, blockTesoura, player, modoJogo, chave)
+
                 elif x < 340 and x > 250 and y > 440 and y < 580 and blockPapel < 3:
-                    if blockPapel < 3:
-                        blockPapel += 1
-                        if blockPedra == 2:
-                            blockPedra -= 1
-                        if blockTesoura == 2:
-                            blockTesoura -= 1
-                        player = 2
-                        modoJogo = False
-                        chave = False
-                    if blockPedra == 3:
-                        blockPedra += 1
-                    elif blockPedra == 4:
-                        blockPedra += 1
-                    elif blockPedra == 5:
-                        blockPedra = 1
-                    if blockTesoura == 3:
-                        blockTesoura += 1
-                    elif blockTesoura == 4:
-                        blockTesoura += 1
-                    elif blockTesoura == 5:
-                        blockTesoura = 1
+                    button.play()
+                    blockPedra, blockPapel, blockTesoura, player, modoJogo, chave = aba.OpPapel(
+                        blockPedra, blockPapel, blockTesoura, player, modoJogo, chave)
+
                 elif x < 490 and x > 390 and y > 440 and y < 580 and blockTesoura < 3:
-                    if blockTesoura < 3:
-                        blockTesoura += 1
-                        if blockPedra == 2:
-                            blockPedra -= 1
-                        if blockPapel == 2:
-                            blockPapel -= 1
-                        player = 3
-                        modoJogo = False
-                        chave = False
-                    if blockPedra == 3:
-                        blockPedra += 1
-                    elif blockPedra == 4:
-                        blockPedra += 1
-                    elif blockPedra == 5:
-                        blockPedra = 1
-                    if blockPapel == 3:
-                        blockPapel += 1
-                    elif blockPapel == 4:
-                        blockPapel += 1
-                    elif blockPapel == 5:
-                        blockPapel = 1
+                    button.play()
+                    blockPedra, blockPapel, blockTesoura, player, modoJogo, chave = aba.OpTesoura(
+                        blockPedra, blockPapel, blockTesoura, player, modoJogo, chave)
+
             # reset do jogo
             if Fim == True:
+                # voltar pro menu
                 if x < 428 and x > 313 and y > 300 and y < 415:
-                    Menu = True
-                    player = 0
-                    bot = 0
-                    blockPedra = 1
-                    blockPapel = 1
-                    blockTesoura = 1
-                    playerVida = 200
-                    botVida = 200
-                    modoJogo = True
-                    chave = True
-                    chaveA = 0
-                    botKey = False
-                    vidaKey = False
-                    Fim = False
-                    py = 150
-                    pv = 3
-                    by = 150
+                    trilha.stop()
+                    Menu, player, bot, blockPedra, blockPapel, blockTesoura, playerVida, botVida, modoJogo, chave, chaveA, botKey, vidaKey, Fim, py, pv, by = aba.OpVoltaMenu(
+                        Menu, player, bot, blockPedra, blockPapel, blockTesoura, playerVida, botVida, modoJogo, chave, chaveA, botKey, vidaKey, Fim, py, pv, by)
+                # jogar de novo
                 if x < 286 and x > 170 and y > 300 and y < 415:
-                    player = 0
-                    bot = 0
-                    blockPedra = 1
-                    blockPapel = 1
-                    blockTesoura = 1
-                    playerVida = 200
-                    botVida = 200
-                    modoJogo = True
-                    chave = True
-                    chaveA = 0
-                    botKey = False
-                    vidaKey = False
-                    Fim = False
-                    py = 150
-                    pv = 3
-                    by = 150
+                    player, bot, blockPedra, blockPapel, blockTesoura, playerVida, botVida, modoJogo, chave, chaveA, botKey, vidaKey, Fim, py, pv, by = aba.OpReplay(
+                        player, bot, blockPedra, blockPapel, blockTesoura, playerVida, botVida, modoJogo, chave, chaveA, botKey, vidaKey, Fim, py, pv, by)
+
     # reloading da tela
     screen.fill((0, 0, 0))
-    
-    #menu
+
+    # menu
     if Menu == True:
-        #fundo
+        if som == True:
+            Menu_music.play(-1)
+        # fundo
         screen.blit(fundoMenu, (0, 0))
         screen.blit(playBtn, (240, 250))
-        #titulp
-        font = pygame.font.SysFont(None, 80)
-        img = font.render('Rock Paper Scissors', True, (10,25,55))
-        screen.blit(img, (20, textMuve))
+
+        # titulo
+        text = fontMK.render('@ Rock Paper Scissors', True, (10, 25, 55))
+        text = pygame.transform.rotate(text, TextRotate)
+        screen.blit(text, (20, textMuve))
         textMuve += tv
+        TextRotate += textGrau
+        if TextRotate > 10 or TextRotate < -10:
+            textGrau *= -1
         if textMuve > 150 or textMuve < 5:
             tv *= -1
-        #devs
-        font = pygame.font.SysFont(None, 30)
-        img = font.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50,50,50))
+
+        # devs
+        img = fontDev.render('SuperDevs: GuilhermeAnchieta and JoaoBRBR', True, (50, 50, 50))
         screen.blit(img, (20, 580))
-    #jogo
+
+        # area de como jogar
+        screen.blit(regras, (textMove, 365))  
+        textRule = fontmk1.render('Regras', True, (0, 0, 0))
+        screen.blit(textRule, (530, 300))
+        if textMoveKey:
+            if textMove > 170:
+                textMove -= 1.5
+        elif textMove < 600:
+            textMove += 1.5
+        if textMoveKey:
+            screen.blit(setared, (540, 330))
+        else:
+            screen.blit(setagreen, (540, 330))
+
+    # jogo
     elif Menu == False:
         screen.blit(fundo, (0, 0))
         # quadrado preto
@@ -227,8 +207,8 @@ while True:
         screen.blit(quadrado2, (230, 435))
         screen.blit(quadrado3, (370, 435))
         # botoes
-        screen.blit(pedra, (70, 417))
-        screen.blit(papel, (205, 405))
+        screen.blit(pedra, (70, 4113))
+        screen.blit(papel, (205, 400))
         screen.blit(tesoura, (350, 400))
 
         # mostra imagem player e animação da mao
@@ -272,13 +252,13 @@ while True:
         if blockTesoura > 2:
             screen.blit(quadrado3, (370, 435))
 
-        #texto-- True para apareer -- False para sumir 
-        text = cont.render(f'{blockPedra}', True, cor_branca)
-        screen.blit(text, (90,435))
-        text = cont.render(f'{blockPapel}', True, cor_branca)
-        screen.blit(text, (230,435))
-        text = cont.render(f'{blockTesoura}', True, cor_branca)
-        screen.blit(text, (370,435))
+        # contador dos botões
+        #text = fontblock.render(f'{blockPedra}', True, cor_branca)
+        #screen.blit(text, (90, 435))
+        #text = fontblock.render(f'{blockPapel}', True, cor_branca)
+        #screen.blit(text, (230, 435))
+        #text = fontblock.render(f'{blockTesoura}', True, cor_branca)
+        #screen.blit(text, (370, 435))
 
         # escolha do bot,
         if botKey == True:
@@ -347,5 +327,11 @@ while True:
         if Fim == True:
             screen.blit(again, (170, 300))
             screen.blit(goToMenu, (310, 300))
-        # refresh da tela
+    # Imagens som on/off
+    if som == True:
+        screen.blit(sound_on, (549, 550))
+    else:
+        screen.blit(sound_off, (549, 550))
+
+    # refresh da tela
     pygame.display.update()
